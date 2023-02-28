@@ -19,22 +19,69 @@ const initialState = {
     500: 1,
     1000: 1,
   },
-  productStock: {
-    Coke: 10,
-    Pepsi: 5,
-    Water: 20,
-  },
-  selectedProduct: null,
+  products: [
+    {
+      id: 1,
+      name: "Coke",
+      stock: 5,
+      price: 15,
+      image: "/images/products/can_images.png",
+    },
+    {
+      id: 2,
+      name: "Soda",
+      stock: 5,
+      price: 15,
+      image: "/images/products/can_images.png",
+    },
+    {
+      id: 3,
+      name: "Mineral Water",
+      stock: 2,
+      price: 8,
+      image: "/images/products/can_images.png",
+    },
+    {
+      id: 4,
+      name: "Potato Chip",
+      stock: 3,
+      price: 15,
+      image: "/images/products/can_images.png",
+    },
+    {
+      id: 5,
+      name: "Beer",
+      stock: 0,
+      price: 55,
+      image: "/images/products/can_images.png",
+    },
+    {
+      id: 6,
+      name: "Snack #1",
+      stock: 1,
+      price: 9,
+      image: "/images/products/snack_image.png",
+    },
+    {
+      id: 7,
+      name: "Snack #2",
+      stock: 3,
+      price: 250,
+      image: "/images/products/snack_image.png",
+    },
+    {
+      id: 9,
+      name: "Snack #3",
+      stock: 5,
+      price: 12,
+      image: "/images/products/snack_image.png",
+    },
+  ],
+  selectedProduct: [],
   moneyInserted: 0,
   changeToReturn: 0,
 };
 
-export const PRODUCT_PRICES = {
-  Coke: 15,
-  Pepsi: 18,
-  Soda: 12,
-  Water: 8,
-};
 export const COIN_VALUES = [10, 5, 2, 1];
 export const BANKNOTE_VALUES = [1000, 500, 100, 50, 20];
 // Action Creators
@@ -90,18 +137,25 @@ export const vendingMachineReducer = (state = initialState, action) => {
         selectedProduct: action.payload,
       };
     case DISPENSE_PRODUCT:
-      changeToReturn =
-        state.moneyInserted - PRODUCT_PRICES[state.selectedProduct];
+      changeToReturn = state.moneyInserted - state.selectedProduct.price;
+      const product = state.products;
+      const selectedProduct = state.products.find(
+        (product) => product.id === state.selectedProduct.id
+      );
+
+      product.forEach((element, index) => {
+        console.log("indexc", index);
+        if (element.id === selectedProduct.id) {
+          product[index].stock = product[index].stock - 1;
+        }
+      });
+
       return {
         ...state,
-        productStock: {
-          ...state.productStock,
-          [state.selectedProduct]:
-            state.productStock[state.selectedProduct] - 1,
-        },
+        products: [...product],
         moneyInserted: changeToReturn,
         changeToReturn,
-        selectedProduct: null,
+        selectedProduct: [],
       };
     case DISPENSE_CHANGE:
       moneyLeft = state.moneyInserted;
