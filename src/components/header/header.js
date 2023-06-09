@@ -32,7 +32,7 @@ const homeHeader = () => {
   return (
     <StyledWrapper>
       <span className="title-header">
-        BLUE VENDING MACHINE{" "} aroiii
+        BLUE VENDING MACHINE try to put something
         <img src="/blueVendingIcon.png" alt="header-icon" />
       </span>
     </StyledWrapper>
