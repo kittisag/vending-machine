@@ -51,6 +51,7 @@ const CoinBanknoteStockDisplay = () => {
           {COIN_VALUES.map((coinValue) => (
             <li key={coinValue}>
               {coinValue} THB: Stock Left : {coinStock[coinValue]}
+              just test
             </li>
           ))}
         </ul>
